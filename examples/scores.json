@@ -1,0 +1,7 @@
+{
+  "t1_bare_0": 80, "t1_bare_1": 82, "t1_bare_2": 78,
+  "t1_contract_0": 90, "t1_contract_1": 88, "t1_contract_2": 92,
+  "t2_bare_0": 70, "t2_bare_1": 65, "t2_bare_2": 68,
+  "t2_contract_0": 85, "t2_contract_1": 83, "t2_contract_2": 84,
+  "_noise_band": 5
+}
