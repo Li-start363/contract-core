@@ -58,12 +58,19 @@ python3 selftune/ab_runner.py --analyze runs/ --scores scores.json
 
 **三条硬规则**(实测换来的):评测环境必须裸(`selftune/评测环境规范.md`)、必须多采样对照噪声带、修剪必须有可定位证据。
 
-## Failure map(诚实失效边界)
+## Where it helps / where it hurts(优势与局限,详见 [docs/applicability-map.md](docs/applicability-map.md))
 
-- 写作类任务:两组独立数据都显示**负增益**,不要用。
-- 数据分析:无增益。
-- 研究创意类:方向真实但幅度随任务族波动大(独立集严格门槛未过,单侧 95% CI 极宽)。
-- 自优化"删条款变好"**未被证实**(G≈+0.9 < 噪声带):修剪需要可运行验证信号(测试器),纯文本证据不够。
+**Strengths(实测)**:creative/research/design tasks get a real, non-trivial lift(+17.7/+9.0 on two independent sets)——contract scaffolding targets exactly that domain's failure modes(wishful reasoning, fabrication, unfalsifiable claims);in restricted sandboxes it doubles as delivery-reliability insurance;weakest models benefit most(递减律观察)。
+
+**Limitations(如实,全部实测)**:
+- **Writing/final-deliverable prose: gains are NEGATIVE(−7.0, two sets consistent)——don't use it there.** The scaffolding eats the deliverable's budget and reads as boilerplate.
+- Data/computation tasks: no gain(≈0)。
+- Research lift is direction-consistent but **strict independent replication did not pass**(claim scoped accordingly;CI very wide at n=3/domain)。
+- Self-optimization via clause-pruning is **not proven**(G≈+0.9 < noise floor)——pruning needs runnable tests, not text evidence。
+- Measurement noise is large(±50 pts scale on twin runs):single-sample conclusions are worthless。
+- LLM-as-judge(跨族双评缓解未消除)、单一 cheap-model 主体、域覆盖 4 类、评测环境必须裸(三次整批返工的教训)。
+
+**One-liner**: use it for think-before-you-write tasks(ideas/plans/designs/reviews);don't use it for finished prose or pure computation;measure on your own tasks first(selftune, 30 min)。
 
 ## 安全与范围
 
