@@ -1,8 +1,8 @@
-# contract-core + selftune
+# Contract Core — lift cheap LLMs to flagship level on creative tasks
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-**A lightweight "contract" layer that lifts cheap LLMs toward flagship-level performance on creative/research tasks — with a self-optimization kit and an honest failure map.**
+**A 5-clause prompt "contract" that makes cheap models think before they write — measured across ~200 controlled outputs, with a self-optimization kit and an honest failure map.**
 
 一句话:给便宜模型套一份 5 条款「合同」(先出方案/排除平凡误判/写明可被推翻/禁编造/结果诚实),在创意类任务上把它抬到接近旗舰模型裸奔的水平——附自优化工具包与诚实的失效边界。
 
@@ -18,6 +18,8 @@
 | Data analysis | ≈0 | ≈0 | no gain (trivial) |
 
 - 递减律(观察):模型越弱、合同吃得越多 — cheap +6.25 / mid +3.25 / frontier +0.5(pilot, n=2, exploratory only)。
+
+  ![Diminishing contract gain (pilot, n=2, exploratory): cheap +6.25 / mid +3.25 / frontier +0.5](assets/gain_curve.png)
 - ⚠️ Measurement noise is large (same-contract twin runs can differ by ±50 judged points): **always multi-sample and compare against your noise floor** (built into `selftune/`).
 
 ```
