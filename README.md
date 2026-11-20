@@ -13,9 +13,9 @@
 | Task domain | Cheap model + contract vs flagship bare | Mechanism gain (contract − bare, cheap model) | Verdict |
 |---|---|---|---|
 | Research / creative ideas | within ~2.5–12 pts (two independent task sets) | **+17.7 / +9.0** (both non-trivial) | direction consistent; strict independent replication **not passed** |
-| Engineering (code) | competitive | +6 ~ +28 (noisy; environment-sensitive) | reliability insurance in restricted sandboxes |
-| Writing | −7.5 ~ −9.3 | negative | **stable failure boundary** |
-| Data analysis | ≈0 | ≈0 | no gain (trivial) |
+| Engineering (code) | competitive (per-item spread −75.5…+92.5) | +6.0 (set A, below +10 threshold); code-task mechanical scores saturated at 100/100 | reliability insurance in restricted sandboxes (qualitative); mechanism gain **not established** |
+| Writing | −9.3 / −7.5 (both sets) | −7.0 (set A) / +1.3 (set B) — **not reliable** | **failure boundary**: no reliable gain, and the lifted model still trails flagship bare on both sets |
+| Data analysis | −4.7 (set A) / +7.3 (set B) | +1.7 / +3.3 (below +10 threshold) | no useful gain; (the earlier ≈0 figure referred to information-synthesis tasks, old S-set, ≈0 there) |
 
 - 递减律(观察):模型越弱、合同吃得越多 — cheap +6.25 / mid +3.25 / frontier +0.5(pilot, n=2, exploratory only)。
 
@@ -65,8 +65,8 @@ python3 selftune/ab_runner.py --analyze runs/ --scores scores.json
 **Strengths(实测)**:creative/research/design tasks get a real, non-trivial lift(+17.7/+9.0 on two independent sets)——contract scaffolding targets exactly that domain's failure modes(wishful reasoning, fabrication, unfalsifiable claims);in restricted sandboxes it doubles as delivery-reliability insurance;weakest models benefit most(递减律观察)。
 
 **Limitations(如实,全部实测)**:
-- **Writing/final-deliverable prose: gains are NEGATIVE(−7.0, two sets consistent)——don't use it there.** The scaffolding eats the deliverable's budget and reads as boilerplate.
-- Data/computation tasks: no gain(≈0)。
+- **Writing/final-deliverable prose: no reliable gain (−7.0 / +1.3 across two sets), and the lifted model still trails flagship bare (−9.3 / −7.5)——don't use it there.** The scaffolding eats the deliverable's budget and reads as boilerplate.
+- Data/computation tasks: no useful gain (mechanism +1.7 / +3.3, below threshold; information-synthesis ≈0)。
 - Research lift is direction-consistent but **strict independent replication did not pass**(claim scoped accordingly;CI very wide at n=3/domain)。
 - Self-optimization via clause-pruning is **not proven**(G≈+0.9 < noise floor)——pruning needs runnable tests, not text evidence。
 - Measurement noise is large(±50 pts scale on twin runs):single-sample conclusions are worthless。
