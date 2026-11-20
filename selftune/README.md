@@ -1,27 +1,27 @@
-# selftune:自优化工具包(给下载者的五件套)
+# selftune: the self-tuning kit (five pieces for downloaders)
 
-让任何便宜模型 + 「合同核心」追平旗舰——并让你**用自己任务实测**这个增益值多少。
-全程本地、免费(只花你自己的模型调用),不需要任何订阅。
+Lets any cheap model + "contract core" catch up to flagship — and lets you measure on your own tasks what that gain is worth.
+All local, free (you only spend your own model calls), no subscription needed.
 
-## 用户旅程(约 30 分钟跑通)
-1. **标定** `calibrate/` —— 8 道带难度梯度的探针,给出大脑画像(强项/弱项)与推荐条款配置(约 10 分钟)
-2. **A/B 测量** `ab_runner.py` —— 拿你自己的 2 个真实任务跑 裸/机制 两臂,**每臂 ≥3 个采样**(见下"为什么必须多采样"),出 ΔQ 报告带噪声带
-3. **修剪** `修剪协议.md` —— 按 ΔQ 报告逐条留/关条款(判据在跑 A/B **之前**写死),复测
-4. **坑注入** `pitfall_inject.py` —— 把你自己踩的坑喂回机制,下次自动提醒
-5. **判据** `判据生成器.md` —— 为你的领域生成"证伪三件套"草稿(阈值/退化预案/拒判规则)
+## User journey (up and running in ~30 minutes)
+1. **Calibrate** `calibrate/` — 8 probes with a difficulty gradient, producing a capability profile (strengths/weaknesses) and a recommended clause config (~10 minutes)
+2. **A/B measurement** `ab_runner.py` — run bare/contract arms on your own 2 real tasks, **≥3 samples per arm** (see "why multi-sample is mandatory" below), get a ΔQ report with noise band
+3. **Prune** `pruning-protocol.md` — keep/drop clauses one by one per the ΔQ report (criteria are locked before running the A/B), then re-test
+4. **Pitfall injection** `pitfall_inject.py` — feed your own pitfalls back into the mechanism so it reminds you automatically next time
+5. **Criteria** `criteria-generator.md` — generate a "falsification triple" draft for your domain (threshold / degradation plan / refuse-to-judge rules)
 
-## 三条硬规则(实测踩坑换来的,详见 `评测环境规范.md`)
-1. **评测环境必须裸**:空工作目录 + 禁工具 + 隔离 agent 配置(AGENTS/技能/钩子)。否则模型会去"委派/写文件/读旧答案",测的就不是它自己。
-2. **必须多采样**:同提示词两次运行的评分差可达 ±50 分级(实测),单样本 ΔQ 不可信。每臂 ≥3 采样,报均值±带宽。
-3. **修剪要可定位证据**:只有在 ≥2 道题里能找到**指得出位置**的冲突/错误/交付损失,才允许删条款;删不出证据就保留(这是有效结果)。
+## Three hard rules (learned the hard way; details in `evaluation-environment.md`)
+1. **The evaluation environment must be bare**: empty working directory + tools disabled + isolated agent config (AGENTS/skills/hooks). Otherwise the model goes off "delegating / writing files / reading old answers", and what you measure is not the model itself.
+2. **Multi-sample is mandatory**: score differences between two runs of the same prompt can reach the ±50 level (measured), so single-sample ΔQ is untrustworthy. ≥3 samples per arm, report mean ± band.
+3. **Pruning requires locatable evidence**: a clause may only be deleted when a conflict/error/delivery loss with a locatable position can be found in ≥2 tasks; if no evidence can be found, keep it (that is a valid result).
 
-## 五件清单
-| 件 | 文件 | 输入 | 输出 |
+## The five pieces
+| Piece | File | Input | Output |
 |---|---|---|---|
-| 标定器 | `calibrate/` | 8 道探针 | 大脑画像 + 推荐条款配置 |
-| 配对测量器 | `ab_runner.py` | 你的任务 + 模型命令 | ΔQ 报告(带噪声带) |
-| 修剪协议 | `修剪协议.md` | ΔQ 报告 | 修剪表 + M1 合同 |
-| 坑注入器 | `pitfall_inject.py` | 踩坑 markdown | 标准坑库条目 + hook 注入片段 |
-| 判据生成器 | `判据生成器.md` | 领域问答 | 证伪三件套草稿 |
+| Calibrator | `calibrate/` | 8 probes | capability profile + recommended clause config |
+| A/B runner | `ab_runner.py` | your tasks + model command | ΔQ report (with noise band) |
+| Pruning protocol | `pruning-protocol.md` | ΔQ report | pruning table + M1 contract |
+| Pitfall injector | `pitfall_inject.py` | pitfall markdown | standard pitfall-library entry + hook injection snippet |
+| Criteria generator | `criteria-generator.md` | domain Q&A | falsification-triple draft |
 
-合同核心原文在 `../contracts/contract-core.md`(5 条款:方案先行/平凡解释排除/可被推翻·止损/禁编造/结果诚实)。
+The contract core text lives in `../contracts/contract-core.md` (5 clauses: plan first / rule out trivial explanations / falsifiable·stop-loss / no fabrication / report honestly).

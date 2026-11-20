@@ -1,19 +1,19 @@
-# examples:端到端 5 分钟示例
+# examples: end-to-end 5-minute demo
 
-演示 selftune 全流程(用假引擎,不耗你的模型额度):
+Demonstrates the full selftune flow (uses a fake engine, costs none of your model quota):
 
 ```bash
 cd examples
 bash run_demo.sh
 ```
 
-脚本会:
-1. 用 `tasks/` 里的 2 道样题,以假引擎(`printf` 模拟模型)跑 2 臂 × 3 采样;
-2. 用 `scores.json`(预先假定的打分)演示 ΔQ 报告与噪声带对照;
-3. 打印结论样式(含"低于噪声带则判无证据")。
+The script will:
+1. run the 2 sample tasks in `tasks/` with a fake engine (`printf` standing in for the model), 2 arms × 3 samples;
+2. use `scores.json` (pre-assumed scores) to demo the ΔQ report and noise-band comparison;
+3. print the verdict format (including "below the noise band = judged no-evidence").
 
-接真模型:把 `run_demo.sh` 里的 `--engine` 换成你的调用命令即可,例如:
+To hook up a real model: swap `--engine` in `run_demo.sh` for your own call command, e.g.:
 - `--engine 'claude -p < {prompt}'`
 - `--engine 'codex exec --sandbox read-only -m <model> < {prompt}'`
 
-⚠️ 真跑前读 `../selftune/评测环境规范.md`(逐格空 cwd、禁工具、隔离 agent 配置、≥3 采样)。
+⚠️ Before real runs, read `../selftune/evaluation-environment.md` (empty cwd per cell, tools disabled, isolated agent config, ≥3 samples).

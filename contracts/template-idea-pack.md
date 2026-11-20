@@ -1,12 +1,12 @@
-# 模板:想法包(研究/创意任务专用外壳)
+# Template: idea pack (shell for research / creative tasks)
 
-> 与 `contract-core.md` 拼用:先贴合同核心,再贴本外壳。**术语通用化**,任何"出点子/设计方案"类任务可用。
+> Use together with `contract-core.md`: paste the contract core first, then this shell. **Terminology is generic** — usable for any "generate ideas / design a scheme" task.
 
-【任务】围绕【主题】出 2~4 个想法包,每条 5 项:
-①可证伪假设(一句话,写明什么观察会推翻它)
-②最小验证设计(对照/样本量/判据)
-③所需资源与失败信号(什么出现=这条路不通)
-④与现有做法的差异点(方法增量是什么,说不出来就别写)
-⑤最接近的已有工作【待核:没查证就写"未核",禁止编造文献】
+【Task】produce 2~4 idea packs around 【topic】, each with 5 items:
+① falsifiable hypothesis (one sentence, stating what observation would refute it)
+② minimal validation design (control / sample size / criteria)
+③ resources needed and failure signal (what appearing = this path is a dead end)
+④ difference from existing practice (what the methodological increment is; if you can't say it, don't write it)
+⑤ closest existing work 【to verify: if not checked, write "unverified"; fabricating references is forbidden】
 
-按「新增量×可验证性」排序。证据不足处写"材料不足,无法判断"。
+Rank by "increment × verifiability". Where evidence is insufficient, write "insufficient evidence, cannot judge".

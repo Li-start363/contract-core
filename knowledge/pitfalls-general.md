@@ -1,43 +1,43 @@
-# 通用工程坑库(28 条,脱敏版)
+# General engineering pitfall library (28 entries, sanitized)
 
-> 从数百次实测里蒸馏;派任务书/守则时按主题抽 3~8 条注入。每条=现象+怎么防。
+> Distilled from hundreds of measured runs; when dispatching a task book / ruleset, pick 3~8 entries by topic and inject them. Each entry = symptom + how to prevent it.
 
-## 上机/批量执行
-1. 脚本一律不得内置自动关机/定时关机/兜底关机——跑完只报"可关",何时关由人定。
-2. 定并发按显存 0.75 预算留量、按峰值不按稳态;参数量小≠省显存(激活值可差 4 倍)。
-3. ETA 用实测外推,不用理论值;运行中改脚本=新旧混跑,必须停了再改。
-4. 传文件:glob 在远端展开会漏件;传完必做双侧校验(如 md5);上传前先测速,别记固定值。
+## Machine runs / batch execution
+1. Scripts must never contain any form of auto-shutdown / scheduled shutdown / shutdown fallback — when done, just report "ready to shut down"; a human decides when.
+2. Size concurrency on a 0.75 VRAM budget and on peak, not steady state; small parameter count ≠ low VRAM use (activations can differ 4×).
+3. Extrapolate ETA from measurements, not theory; editing a script mid-run = mixed old/new runs — stop first, then edit.
+4. File transfer: globs expand on the remote side and silently drop files; always double-check both sides after transfer (e.g. md5); speed-test before uploading instead of memorizing a fixed number.
 
-## Shell/脚本
-5. heredoc 后台化丢内容;`A && B & C` 优先级吃掉 cd/写文件。
-6. pkill/pgrep -f 自匹配会杀掉自己——只用精确 PID 或 [m]atch bracket。
-7. 引号断点:复杂内联脚本改用文件落盘;模块级常量在 import 时定型,运行中改环境变量不生效。
-8. 运行中的脚本别改(内存里的版本与磁盘错位)。
-9. scp/传输的 glob 不展开;tar 管道或逐件传。
+## Shell / scripts
+5. Backgrounding a heredoc loses its content; in `A && B & C` the precedence eats the cd/file write.
+6. pkill/pgrep -f self-matching kills your own process — use exact PIDs or the [m]atch bracket trick only.
+7. Quote breakpoints: for complex inline scripts, write to a file instead; module-level constants are fixed at import time, so changing environment variables mid-run has no effect.
+8. Never edit a running script (the in-memory version and the disk version go out of sync).
+9. scp/transfer globs do not expand; use a tar pipe or transfer file by file.
 
-## 断言/验收
-10. 不信脚本自报的 *_DONE/ALL_DONE/BUILD_OK,只信产物(存在+非 0 字节+字段全+数字对判据)。
-11. 判据要匹配结论独有串,防永真 grep(判分正则曾命中"总分:60"这类噪声行)。
-12. 说"全部/没有/残留 0"前先 grep/find 并写明搜索范围。
-13. 落盘三要素:机器+绝对路径+字节数;没回证不许说"已写"。
-14. 失败必须可见(写 *_FAILED),禁静默继续。
+## Assertions / acceptance
+10. Never trust a script's own *_DONE/ALL_DONE/BUILD_OK; trust only the artifacts (exists + non-zero bytes + all fields present + numbers match the criteria).
+11. Criteria must match a string unique to the verdict, guarding against always-true greps (a scoring regex once matched noise lines like "score: 60").
+12. Before saying "all / none / 0 remaining", run grep/find first and state the search scope.
+13. The three elements of a disk-write claim: machine + absolute path + byte count; without write-back evidence you may not say "written".
+14. Failures must be visible (write *_FAILED); silent continuation is forbidden.
 
-## 钩子/配置层
-15. 钩子失效是静默的:心跳(证跑到了)+冒烟(证做对了)+显式声明,三重自证;hook 超时是 fail-open。
-16. 某些 agent 框架的钩子按命令字符串记信任:改命令=静默跳过,逻辑放新脚本、旧路径跳板。
-17. CLI 变参会吞位置参数(如 --disallowedTools 吞 prompt):提示词走 stdin 最稳。
+## Hooks / configuration layer
+15. Hook failures are silent: heartbeat (proves it ran) + smoke test (proves it did the right thing) + explicit declaration — triple self-verification; hook timeouts are fail-open.
+16. Some agent frameworks' hooks trust by command string: changing the command = silently skipped; put the logic in a new script and keep the old path as a trampoline.
+17. New CLI flags swallow positional arguments (e.g. --disallowedTools swallowing the prompt): feeding the prompt via stdin is the most stable route.
 
-## 评测/实验设计
-18. 数据划分泄漏(per-item split)可把 98% 打到 40%;对照必须同划分口径;数据划分与测评协议是重灾区。
-19. 测评前先排平凡解释:尺度/归一化差异、置信区间宽度、伪重复(共享数据源当独立样本)。
-20. 种子与初始化顺序影响复现;固定 seed 还不够,要固定初始化顺序。
-21. 图字号按"自然字号×自然宽/版面宽"反推,改版面必须同步改字号常量。
+## Evaluation / experiment design
+18. Data-split leakage (per-item split) can drop 98% to 40%; controls must use the same split; data splitting and the evaluation protocol are the biggest disaster areas.
+19. Rule out trivial explanations before evaluating: scale/normalization differences, confidence-interval width, pseudoreplication (shared data source counted as independent samples).
+20. Seeds and initialization order affect replication; fixing the seed is not enough — fix the initialization order too.
+21. Figure font size is back-derived as natural size × natural width / layout width; changing the layout requires updating the font-size constant in step.
 
-## LLM 评测专坑(本仓库实测)
-22. **评测环境必须裸**:带工具→交付物写文件、评分只见片段;带旧文件→模型读回来"交差";带 agent 章程/技能→模型拒答去"委派"。逐格空 cwd+禁工具+隔离配置。
-23. 拒答要分类:"给我可写环境"=环境性拒答;"内容错/缺主件"=能力失败。计分分开,报告单列。
-24. 同提示词两次运行分差可达 ±50 分级:单样本 ΔQ 不可信,每臂 ≥3 采样、对照噪声带。
-25. LLM 评分偶发"占位 stub"废卷(自报"待覆写"):验卷,废卷重评一次,原始记录保留。
-26. 评委家族偏差:评审员不得是产出者;跨族双评+分歧标注。
-27. 生成调用必须设超时:API 流挂起会无限等(实测同 prompt 连挂 32 分钟),超时=传输失败,重试有限次。
-28. 查进程的 grep 别写连字:"claude -p" 会被 `--settings ...` 隔开漏判;按进程名宽匹配,先证伪自己的检查器。
+## LLM evaluation pitfalls (measured in this repository)
+22. **The evaluation environment must be bare**: tools present → the deliverable gets written to a file and the grader sees only fragments; old files present → the model reads them back to "deliver"; agent charter/skills present → the model refuses and goes to "delegate". Empty cwd per cell + tools disabled + isolated config.
+23. Classify refusals: "give me a writable environment" = environment-induced refusal; "wrong content / missing main artifact" = capability failure. Score them separately, list them separately in the report.
+24. Score differences between two runs of the same prompt can reach the ±50 level: single-sample ΔQ is untrustworthy; ≥3 samples per arm, measured against the noise band.
+25. LLM grading occasionally produces "placeholder stub" void papers (self-reports "to be overwritten"): verify the papers, re-grade void papers once, keep the raw record.
+26. Judge-family bias: the judge must not be the producer; cross-family dual judging + disagreement annotation.
+27. Generation calls must set a timeout: a hung API stream waits forever (measured: same prompt hung 32 minutes straight); timeout = transport failure, retry a limited number of times.
+28. When grepping processes, don't write a hyphen-joined string: "claude -p" gets separated by `--settings ...` and slips through; match broadly by process name, and falsify your own checker first.

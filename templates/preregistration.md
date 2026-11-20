@@ -1,29 +1,29 @@
-# 模板:预注册 + 降级表(规则先于结果)
+# Template: pre-registration + downgrade table (rules before results)
 
-> 用法:实验/测量**开始前**填好并冻结;结果出来后只能追加「勘误/追加」段,不得改原判据。
+> Usage: fill in and freeze **before** the experiment/measurement starts; after results arrive you may only append an "errata / addenda" section — the original criteria must not be edited.
 
-## 〇、命题
-- H1:【主张,写成可被推翻的形式】
-- 判据(冻结):【阈值+判法,如:域均差 ≥−10 且 ≥2/3 任务 ≥−5;或:95% 单侧下界 > −5】
+## 0. Proposition
+- H1: 【claim, written in a refutable form】
+- Criteria (frozen): 【threshold + verdict rule, e.g.: domain mean difference ≥−10 and ≥2/3 of tasks ≥−5; or: 95% one-sided lower bound > −5】
 
-## 一、材料与配置(冻结)
-- 任务/数据:【清单,在结果前定死】
-- 臂/条件:【对照组怎么配】
-- 运行:每格独立上下文;采样数 ≥3/臂;仅传输失败可重试;拒答/截断保留为有效结果。
-- 评分:【双评/机评;匿名;分歧怎么裁】
+## 1. Materials and configuration (frozen)
+- Tasks/data: 【list, fixed before results】
+- Arms/conditions: 【how the control is set up】
+- Runs: independent context per cell; ≥3 samples/arm; only transport failures may be retried; refusals/truncation kept as valid results.
+- Scoring: 【dual judge / machine grading; anonymous; how disagreements are adjudicated】
 
-## 二、噪声地板(必测)
-同配置两臂(内容完全一样)的分差分布 = 你的地板。**任何"改善 ≥X"必须高于地板。**
+## 2. Noise floor (must be measured)
+The score-difference distribution of two arms under the same configuration (content exactly identical) = your floor. **Any "improvement ≥X" must clear the floor.**
 
-## 三、降级表(冻结)
-| 失败信号 | 处置 |
+## 3. Downgrade table (frozen)
+| Failure signal | Disposition |
 |---|---|
-| 判据只在部分任务/域过 | 主张收窄到过线域,失效边界如实写 |
-| 复现集不支持 | 降档"单任务族/单数据集有效" |
-| 噪声带 ≥ 号称改善 | 判"无证据",加采样或上机械判据 |
-| 环境混杂(工具/旧文件/章程) | 该批作废重跑,不择格替换 |
+| Criteria pass only on some tasks/domains | narrow the claim to the passing domains, state the failure boundary honestly |
+| Replication set does not support it | downgrade to "valid within a single task family / single dataset" |
+| Noise band ≥ the claimed improvement | judge "no evidence", add samples or switch to mechanical criteria |
+| Environment contaminated (tools / old files / charter) | void the whole batch and rerun; do not cherry-pick cells to replace |
 
-## 四、平凡解释排除(动手前)
-【列出 2-3 条"这结果可能只是因为什么"(任务太易/评者偏袒/口径不一致),及排除办法】
+## 4. Trivial-explanation exclusion (before starting)
+【List 2-3 "this result might just be because of X" (task too easy / grader bias / mismatched definitions), and how to rule them out】
 
-## 勘误/追加(留空待用)
+## Errata / addenda (leave empty for later)

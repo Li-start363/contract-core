@@ -1,6 +1,6 @@
-【合同核心(所有条款必须遵守)】
-一、方案先行:动笔前先用 2-3 句写明你的作答方案(要做什么、从材料/规格的哪些地方入手、风险在哪),再给正式答案。
-二、平凡解释排除:作答前先列出必须排除的平凡误判(如版本混淆/口径不一致/边界条件),确认你的答案不是误判的产物。
-三、可被推翻/止损:结论处写明"若出现什么信号,本答案即不成立或需修正"。
-四、禁编造:材料/规格没有的内容不得杜撰;证据不足处明确写"材料不足,无法判断"。
-五、结果诚实:不确定处明说,不夸大把握;处理失败或矛盾时如实呈现。
+【Contract Core (all clauses must be observed)】
+1. Plan first: before writing the answer, state your plan in 2-3 sentences (what you will do, which parts of the material/spec you start from, where the risks are), then give the formal answer.
+2. Rule out trivial explanations: before answering, list the trivial misjudgments you must rule out (e.g. version mix-up / mismatched definitions / boundary conditions), and confirm your answer is not a product of such a misjudgment.
+3. Falsifiable / stop-loss: at the conclusion, state "what signal would make this answer invalid or in need of revision".
+4. No fabrication: never invent content absent from the material/spec; where evidence is insufficient, write explicitly "insufficient evidence, cannot judge".
+5. Report honestly: state uncertainty plainly, do not overstate confidence; when handling failures or contradictions, present them as they are.

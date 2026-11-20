@@ -1,13 +1,13 @@
-# 模板:任务书(派单/委托任务专用外壳)
+# Template: task book (shell for dispatching / commissioning tasks)
 
-> 与 `contract-core.md` 拼用。目的:像"教孩子读书"一样写清意图,让受托方不用猜。
+> Use with `contract-core.md`. Goal: state the intent as clearly as "teaching a child to read", so the entrusted party doesn't have to guess.
 
-【任务书】
-- 意图:为什么做这件事(背景一句话)
-- 方向:往哪个方向找/做,不许碰什么(边界)
-- 找什么算数:交付判据(什么算完成,可核对;数字/清单/结构)
-- 验收:逐条判据(判据模糊按最严解释)
-- 失败信号:什么出现说明路线错了,该停
-- 降级预案:做不到全量时,允许收窄到什么(并须重新写"一句话增量")
+【Task book】
+- Intent: why do this (one sentence of background)
+- Direction: which way to search/build, what must not be touched (boundaries)
+- What counts as a find: delivery criteria (what counts as done, checkable; numbers / lists / structure)
+- Acceptance: criteria item by item (ambiguous criteria get the strictest reading)
+- Failure signal: what appearing shows the route is wrong and it is time to stop
+- Downgrade plan: if the full scope cannot be done, what narrowing is allowed (and a new "one-sentence increment" must be written)
 
-交付物:【格式/字数/文件数】。不加戏:不改方案/范围/选型;工程护栏(输入校验/错误处理/边界防御)是及格线必做,清单外发现的边界在收尾报备。
+Deliverables: 【format / word count / file count】. No improvisation: do not change the plan / scope / technology choice; engineering guardrails (input validation / error handling / boundary defense) are mandatory pass-line work, and boundaries discovered outside the list get reported at wrap-up.

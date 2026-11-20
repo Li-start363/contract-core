@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-# 配对测量器:你的任务 × {裸, 机制} × ≥3 采样 → ΔQ 报告(带噪声带)
-# 用法:
+# A/B runner: your tasks × {bare, contract} × ≥3 samples → ΔQ report (with noise band)
+# Usage:
 #   python3 ab_runner.py --tasks tasks/ --engine 'claude -p < {prompt} > {output}' --samples 3 --out runs/
 #   python3 ab_runner.py --analyze runs/ --scores scores.json
-# 纪律(评测环境规范):每格全新空 cwd;引擎侧自行禁工具/隔离配置;拒答产物保留并在报告单列。
+# Discipline (evaluation-environment.md): brand-new empty cwd per cell; the engine side must disable tools / isolate config itself; refusal artifacts are kept and listed separately in the report.
 import argparse, json, os, random, subprocess, time
 
 def load_tasks(d):
@@ -25,7 +25,7 @@ def main():
 
     if a.analyze:
         scores = json.load(open(a.scores))
-        # scores 结构: {"task_arm_sample": 分数, "control_bare_sample": 分, "control_contract_sample": 分}
+        # scores format: {"task_arm_sample": score, "control_bare_sample": score, "control_contract_sample": score}
         agg = {}
         for k, v in scores.items():
             if k.startswith("_"):
@@ -36,17 +36,17 @@ def main():
         for (t, arm), vs in sorted(agg.items()):
             rows.append((t, arm, round(sum(vs)/len(vs), 1), len(vs)))
         noise = scores.get("_noise_band")
-        print("ΔQ 报告")
-        print("| 任务 | 臂 | 均值 | 采样数 |")
+        print("ΔQ report")
+        print("| Task | Arm | Mean | Samples |")
         print("|---|---|---|---|")
         for r in rows: print(f"| {r[0]} | {r[1]} | {r[2]} | {r[3]} |")
         for t in sorted({r[0] for r in rows}):
             m = {arm: v for (tt, arm), v in [((x[0], x[1]), x[2]) for x in rows] if tt == t}
             if "contract" in m and "bare" in m:
                 dq = round(m["contract"] - m["bare"], 1)
-                verdict = "≥噪声带" if noise and dq > noise else ("低于噪声带" if noise else "噪声带未测")
+                verdict = "≥ noise band" if noise and dq > noise else ("below noise band" if noise else "noise band not measured")
                 print(f"- {t}: ΔQ={dq} ({verdict})")
-        if noise: print(f"噪声带(同合同对照): {noise}")
+        if noise: print(f"Noise band (same-contract control): {noise}")
         return
 
     tasks = load_tasks(a.tasks)
@@ -60,7 +60,7 @@ def main():
     random.Random(a.seed).shuffle(jobs)
     man = open(os.path.join(a.out, "manifest.jsonl"), "a", encoding="utf-8")
     for t, arm, s in jobs:
-        prompt = (contract + "\n\n【任务】\n" if arm == "contract" else "") + tasks[t]
+        prompt = (contract + "\n\n【Task】\n" if arm == "contract" else "") + tasks[t]
         cell = os.path.join(a.out, "cells", f"{t}_{arm}_{s}")
         os.makedirs(cell, exist_ok=True)
         pf = os.path.join(cell, "prompt.txt"); open(pf, "w", encoding="utf-8").write(prompt)
